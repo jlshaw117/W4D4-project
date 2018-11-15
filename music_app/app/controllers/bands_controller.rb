@@ -19,7 +19,7 @@ class BandsController < ApplicationController
   end
 
   def index
-    @bands = Bands.all
+    @bands = Band.all
     render :index
   end
 
