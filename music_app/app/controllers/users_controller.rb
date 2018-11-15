@@ -10,11 +10,16 @@ class UsersController < ApplicationController
 
     if @user.save
       login(@user)
-      # redirect_to 
+      redirect_to user_url(@user)
     else
-      Flash.now[:errors] = "Invalid credentials"
+      Flash.now[:errors] = @user.errors.full_messages
       render :new
     end
+  end
+
+  def show
+    @user = User.find(params[:id])
+    render :show
   end
 
   private
