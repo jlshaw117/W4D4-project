@@ -1,5 +1,7 @@
 class SessionsController < ApplicationController
 
+  before_action :require_user!, only: [:destroy]
+
   def new
     @user = User.new
     render :new
@@ -8,11 +10,11 @@ class SessionsController < ApplicationController
   def create
     @user = User.find_by_credentials(params[:user][:email], params[:user][:password])
 
-    if @user
+    if @user && @user.save
       login(@user)
       redirect_to user_url(@user)
     else
-      Flash.now[:errors] = "Invalid credentials"
+      flash.now[:errors] = "Invalid credentials"
       render :new
     end
   end
